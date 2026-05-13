@@ -11,6 +11,7 @@ Cada álbum possui as seguintes informações:
 ## 1. Ambiente de Desenvolvimento
 *   **Sistemas Operacionais:** Windows / Linux Ubuntu.
 *   **Compilador:** MinGW no Windows.
+*   **Bibliotecas:** Bibliotecas padrão da linguagem C
 
 ## 2. Compilação e Execução
 
