@@ -1,6 +1,5 @@
-#ifndef _COFO_C
 #define _COFO_C
-#include "cofo.h"
+#include "colecao.h"
 #include <stdio.h> 
 #include <stdlib.h> 
 #define TRUE 1
@@ -50,7 +49,7 @@ void *gCofoRemove(gCofo *c, void *key, int (*cmp)(void* a, void* b)){
     if(c!=NULL){                                                                 
         if(c->numItens > 0){                                                     //checa se há elementos no cofo para remover
             int i= 0; int alvo= cmp(key,c->item[i]);                             
-            while( i< c->numItens -1 && alvo != TRUE){                           //enquanto o índice não ultrapassar o último item E o alvo ainda não foi encontrado
+            while( i< c->numItens -1  && alvo != TRUE){                           //enquanto o índice não ultrapassar o último item E o alvo ainda não foi encontrado
                 i++;       
                 alvo = cmp(key, c->item[i]);                                     //chama a função que compara para o próximo elemento do vetor de itens
             }
@@ -61,7 +60,8 @@ void *gCofoRemove(gCofo *c, void *key, int (*cmp)(void* a, void* b)){
                     c->item[j] = c->item[j+1];                                   //a partir da posição do valor encontrado, puxar todos os valores sucessores dele pra esquerda
                 }
 
-                c->numItens --;                                                  
+                c->numItens --; 
+                c->cur = -1;                                                 
                 return elemento;                                                 //retorna o ponteiro para o elemento que foi removido
             }
         }
@@ -74,13 +74,15 @@ void *gCofQuery(gCofo *c, void *key, int (*cmp)(void* a, void *b)){
     if(c!= NULL){                                                                
         if(c->numItens > 0){                                                     //checa se há elementos para buscar 
             int i= 0; int alvo = cmp(key, c->item[i]);
-            while(i < c->numItens-1 && alvo != TRUE){                            //loop de condição: enquanto o índice não ultrapassar o último item E o alvo ainda não foi encontrado
+            while(i < c->numItens -1 && alvo != TRUE){                            //loop de condição: enquanto o índice não ultrapassar o último item E o alvo ainda não foi encontrado
                 i++;
                 alvo = cmp(key, c->item[i]);                                     //chama a função que compara para o próximo elemento do vetor de itens
             }
 
             if(alvo == TRUE){
                 return c->item[i];                                               //se encontrou o alvo retorna um ponteiro para o elemento                                           
+            }else{
+                return NULL;
             }
         }
     }
@@ -107,5 +109,16 @@ void *gCofGetNext(gCofo *c){
     }
     return NULL;                                                                //se o cofo não existir ou não houver um próximo elemento, retorna null
 }
+int gCofoEsvazia(gCofo *c){
+    if(c!=NULL){
+        for(int i = 0; i < c->numItens;i++){
+            free(c->item[i]);
+        }
+        c->numItens = 0;
+        c->cur=-1;
+        return TRUE;
+    }
 
-#endif
+    return FALSE;
+
+}

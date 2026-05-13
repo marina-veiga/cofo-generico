@@ -35,6 +35,8 @@ void *gCofGetFirst(gCofo *c);
 // Função que retorna o próximo elemento do cofo ou NULL se chegou ao fim.
 void *gCofGetNext(gCofo *c);
 
+//Função que esvazia o cofo 
+int gCofoEsvazia(gCofo *c);
 
 #else
 
@@ -46,6 +48,7 @@ extern void *gCofoRemove(gCofo *c, void *key, int (*cmp)(void* a, void* b));
 extern void *gCofQuery(gCofo *c, void *key, int (*cmp)(void* a, void *b));
 extern void *gCofGetFirst(gCofo *c);
 extern void *gCofGetNext(gCofo *c);
+extern int gCofoEsvazia(gCofo *c);
 
 #endif
 #endif
